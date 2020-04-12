@@ -63,6 +63,8 @@
 </view>
 
 <view class='more-things'>
-  <image src='https://cdn.it120.cc/apifactory/2017/12/27/605e53ea7d6cab4c289d8357b6ff0e2e.png' style='width:450rpx;height:220rpx;'>
-  </image>
+  <image src='/images/gengduojingcai.png' style='width:450rpx;height:220rpx;'></image>
 </view>
+
+<import src="/templates/login/index.wxml" />
+<template is="apifmLogin" data="{{wxlogin: wxlogin}}" />

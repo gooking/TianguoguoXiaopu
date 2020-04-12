@@ -1,0 +1,25 @@
+<view class="score">
+  <view>当前可用积分</view>
+  <view class="num">{{score}}</view>
+</view>
+<view class="container">
+  <form bindsubmit="bindSave">
+    <view class="form-box">
+      <view class="row-wrap">
+        <view class="label">兑换积分</view>
+        <view class="label-right">
+          <input name="score" class="input" type="text" placeholder="你希望用多少积分来兑换现金" />
+        </view>
+      </view>
+    </view>
+    <button type="warn" class="save-btn" formType="submit">立即兑换</button>
+  </form>  
+  <view wx:if="{{deductionRules}}" class="rules">
+    <view wx:for="{{deductionRules}}" wx:key="id">{{ item.score }} 积分即可兑换{{ item.money }}元现金</view>
+  </view>
+</view>
+
+
+
+<import src="/templates/login/index.wxml" />
+<template is="apifmLogin" data="{{wxlogin: wxlogin}}" />

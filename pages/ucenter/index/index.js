@@ -1,7 +1,10 @@
 const app = getApp()
+const AUTH = require('../../../utils/auth')
 
 Page({
   data: {
+    wxlogin: true,
+
     aboutUsTitle: '',
     aboutUsContent: '',
     servicePhoneNumber: '',
@@ -20,36 +23,30 @@ Page({
     wx.stopPullDownRefresh() //停止下拉刷新
   },
   onLoad() {
-    let that = this;
-    that.setData({
+    this.setData({
       version: app.globalData.version,
       background_color: app.globalData.globalBGColor,
       bgRed: app.globalData.bgRed,
       bgGreen: app.globalData.bgGreen,
-      bgBlue: app.globalData.bgBlue
+      bgBlue: app.globalData.bgBlue,
+      logo: wx.getStorageSync('logo')
     })
-
-    let userInfo = wx.getStorageSync('userInfo')
-    if (!userInfo) {
-      wx.navigateTo({
-        url: "/pages/authorize/index"
-      })
-    }
   },
   onShow() {
     var that = this;
-    that.getUserApiInfo();
-    that.getUserAmount();
-    that.checkScoreSign();
     that.getAboutUs();
     that.getservicePhoneNumber();
 
-    var userInfo = wx.getStorageSync('userInfo')
-    if (userInfo) {
-      that.setData({
-        userInfo: userInfo,
+    AUTH.checkHasLogined().then(isLogined => {
+      this.setData({
+        wxlogin: isLogined
       })
-    }
+      if (isLogined) {
+        this.getUserApiInfo();
+        this.getUserAmount();
+        this.checkScoreSign();
+      }
+    })
     
   },
   aboutUs: function () {
@@ -234,10 +231,9 @@ Page({
     })
   },
   relogin: function () {
-    wx.navigateTo({
-     url: "/pages/authorize/index"
+    this.setData({
+      wxlogin: false
     })
-    this.onLoad()
   },
   recharge: function () {
     wx.navigateTo({
@@ -247,6 +243,38 @@ Page({
   withdraw: function () {
     wx.navigateTo({
       url: "/pages/withdraw/index"
+    })
+  },
+  cancelLogin() {
+    this.setData({
+      wxlogin: true
+    })
+  },
+  processLogin(e) {
+    if (!e.detail.userInfo) {
+      wx.showToast({
+        title: '已取消',
+        icon: 'none',
+      })
+      return;
+    }
+    AUTH.register(this);
+  },
+  scanOrder(){
+    wx.scanCode({
+      onlyFromCamera: true,
+      success(res) {
+        wx.navigateTo({
+          url: '/pages/order-details/scan-result?id=' + res.result,
+        })
+      },
+      fail(err){
+        console.error(err)
+        wx.showToast({
+          title: err.errMsg,
+          icon: 'none'
+        })
+      }
     })
   }
 })

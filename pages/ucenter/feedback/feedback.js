@@ -1,9 +1,4 @@
-//var util = require('../../../utils/util.js');
-//var api = require('../../../config/api.js');
-
-
-
-var app = getApp();
+const WXAPI = require('apifm-wxapi')
 
 Page({
   data: {
@@ -37,5 +32,45 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
+  },
+  bindSave: function (e) {
+    const content = e.detail.value.content
+    const mobile = e.detail.value.mobile
+    if (!content) {
+      wx.showToast({
+        title: '内容不能为空',
+        icon: 'none'
+      })
+      return
+    }
+    if (!mobile) {
+      wx.showToast({
+        title: '请填写手机号',
+        icon: 'none'
+      })
+      return
+    }
+    WXAPI.addComment({
+      type: 1,
+      content: content,
+      extJsonStr: '{"手机号码": ' + mobile +'}'
+    }).then(res => {
+      if (res.code == 0) {
+        wx.showToast({
+          title: '感谢您的反馈',
+          icon: 'success'
+        })
+        setTimeout(()=> {
+          wx.navigateBack({
+            
+          })
+        }, 1000)
+      } else {
+        wx.showToast({
+          title: res.msg,
+          icon: 'none'
+        })
+      }
+    })
   }
 })

@@ -1,4 +1,4 @@
-/* pages/finder/index.wxss */
+@import "/templates/login/index.wxss";
 
 /**index.wxss**/
 

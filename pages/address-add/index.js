@@ -1,8 +1,11 @@
+const AUTH = require('../../utils/auth')
 var commonCityData = require('../../utils/city.js')
 //获取应用实例
 var app = getApp()
 Page({
   data: {
+    wxlogin: true,
+
     provinces: [],
     citys: [],
     defaultProvinceCode: 2,
@@ -20,7 +23,19 @@ Page({
   bindCancel: function () {
     wx.navigateBack({})
   },
+  onShow() {
+    AUTH.checkHasLogined().then(isLogined => {
+      this.setData({
+        wxlogin: isLogined
+      })
+    })
+  },
   bindSave: function (e) {
+    AUTH.checkHasLogined().then(isLogined => {
+      this.setData({
+        wxlogin: isLogined
+      })
+    })
     var that = this;
     var linkMan = e.detail.value.linkMan;
     var address = e.detail.value.address;
@@ -296,5 +311,20 @@ Page({
         });
       }
     })
-  }
+  },
+  cancelLogin() {
+    this.setData({
+      wxlogin: true
+    })
+  },
+  processLogin(e) {
+    if (!e.detail.userInfo) {
+      wx.showToast({
+        title: '已取消',
+        icon: 'none',
+      })
+      return;
+    }
+    AUTH.register(this);
+  },
 })

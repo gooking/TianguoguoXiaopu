@@ -13,6 +13,10 @@ export default Component({
       type: String,
       value: ''
     },
+    rate: {
+      type: String,
+      value: '8'
+    },
     bgColor: {
       type: String,
       value: '#ff5777' // 通告栏背景色

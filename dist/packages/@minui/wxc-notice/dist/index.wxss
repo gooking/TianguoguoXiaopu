@@ -35,9 +35,7 @@
     flex: 1;
     overflow: hidden;
 }
-  .notice__text--animate {
-    animation: notice 8s linear infinite;
-}
+
   .notice__text--overlay {
     position: absolute;
     width: 44rpx;

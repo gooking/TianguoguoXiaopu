@@ -2,9 +2,9 @@
 <view class="container">
   <view class="header" style='background: -webkit-linear-gradient(top, rgba({{bgRed}},{{bgGreen}},{{bgBlue}}, 1), rgba({{bgRed}},{{bgGreen}},{{bgBlue}}, 0.5))'>
     <view class='shop-Info'>
-      <image class="logo" src="{{shopLogo}}" />
+      <image class="logo" src="{{logo}}" />
       <view class='shop-words'>
-        <view class="welcome-ellipsis">欢迎光临！</view>
+        <view class="welcome-ellipsis">{{welcome}}</view>
         <view class="delivery-ellipsis">
           <wxc-elip line='2'> {{shopDelivery}} </wxc-elip>
         </view>
@@ -14,7 +14,7 @@
       </view>
     </view>
     <view class="line"></view>
-    <wxc-notice scroll="{{true}}" close="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" show-icon="{{true}}" notice="{{shopPrompt}}"></wxc-notice>
+    <wxc-notice scroll="{{true}}" close="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" show-icon="{{true}}" notice="{{shopPrompt}}" rate="{{shopPromptRate}}"></wxc-notice>
   </view>
 
   <wxc-dialog class="onLoad-err" title="提示" content="加载商品数据失败！" confirm-text="重试" cancel-text="返回" bindconfirm="onConfirm" bindcancel="onCancel"></wxc-dialog>
@@ -71,3 +71,17 @@
   </view>
 
 </view>
+
+
+
+<import src="../../templates/wxParse/wxParse.wxml" />
+<block wx:if="{{notice}}">
+  <view class="notice-mask"></view>
+  <view class="notice-content">
+    <view class="t">本店快报</view>
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    <view class="notice-btn">
+      <button type="primary" size="mini" bindtap="closeNotice"> 知道了~ </button>
+    </view>
+  </view>
+</block>

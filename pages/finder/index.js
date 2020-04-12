@@ -1,10 +1,13 @@
-//index.js
+const WXAPI = require('apifm-wxapi')
+const AUTH = require('../../utils/auth')
 //获取应用实例
 var starscore = require("../../templates/starscore/starscore.js");
 var WxSearch = require('../../templates/wxSearch/wxSearch.js');
 var app = getApp()
 Page({
   data: {
+    wxlogin: true,
+
     page:1,
     pageSize:10000,
     keyword:'',
@@ -23,27 +26,26 @@ Page({
   },
   
   onPullDownRefresh: function () {
-    var that = this
     wx.showNavigationBarLoading()
-    that.onLoad()
+    this.onLoad()
     wx.hideNavigationBarLoading() //完成停止加载
     wx.stopPullDownRefresh() //停止下拉刷新
   },
   onShareAppMessage: function () {
     return {
-      title: wx.getStorageSync('mallName') + '——' + app.globalData.shareProfile,
-      path: '/pages/finder/index',
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      title: wx.getStorageSync('shareProfile'),
+      path: '/pages/classification/index?inviter_id=' + wx.getStorageSync('uid')
     }
   },
   onShow: function () {
-    var that = this;
-    that.setData({
+    AUTH.checkHasLogined().then(isLogined => {
+      if (isLogined) {
+        this.setData({
+          wxlogin: isLogined
+        })
+      }
+    })
+    this.setData({
       background_color: app.globalData.globalBGColor,
       bgRed: app.globalData.bgRed,
       bgGreen: app.globalData.bgGreen,
@@ -51,36 +53,13 @@ Page({
     })
   },
   onLoad: function () {
-    var that = this
     //初始化的时候渲染wxSearchdata 第二个为你的search高度
-    WxSearch.init(that, 43, app.globalData.hotGoods);
-    WxSearch.initMindKeys(app.globalData.goodsName);  //获取全部商品名称，做为智能联想输入库
+    WxSearch.init(this, 43, wx.getStorageSync('hotSearchWords').split(','));
 
-    that.getCouponsTitlePicStr();
-    that.getCoupons();
-  },
-  getCouponsTitlePicStr: function () {
-    var that = this;
-    //  获取商城名称
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'couponsTitlePicStr'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            couponsTitlePicStr: res.data.data.value
-          })
-          console.log('couponsTitlePicStr------------------')
-          console.log(res.data.data.value)
-          console.log('ok')
-        }
-      },
-      fail: function () {
-        console.log('fail')
-      },
+    this.setData({
+      couponsTitlePicStr: wx.getStorageSync('couponsTitlePicStr')
     })
+    this.getCoupons();
   },
   //事件处理函数
   toDetailsTap: function (e) {
@@ -143,51 +122,38 @@ Page({
       }
     })
   },
-  getCoupons: function () {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/coupons',
-      data: {
-        type: ''
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            hasNoCoupons: false,
-            coupons: res.data.data,
-            couponsStatus: 1
-          });
-          setTimeout(() => {
-            that.setData({
-              couponsStatus: -1
-            })
-          }, 1500)
-        } else if (res.data.code == 700) {
-          that.setData({
-            hasNoCoupons: true,
-            coupons: res.data.data,
-            couponsStatus: 2
-          });
-          setTimeout(() => {
-            that.setData({
-              couponsStatus: -1
-            })
-          }, 1500)
-        }
-      },
-      fail: function(res) {
-        that.setData({
-          networkStatus: false
+  async getCoupons() {
+    const res = await WXAPI.coupons()
+    if (res.code == 0) {
+      this.setData({
+        hasNoCoupons: false,
+        coupons: res.data,
+        couponsStatus: 1
+      });
+      setTimeout(() => {
+        this.setData({
+          couponsStatus: -1
         })
-        setTimeout(() => {
-          that.setData({
-            networkStatus: true
-          })
-        }, 1500)
+      }, 1500)
+    } else if (res.code == 700) {
+      this.setData({
+        hasNoCoupons: true,
+        coupons: res.data,
+        couponsStatus: 2
+      })
+    }
+  },
+  gitCoupon: function (e) {
+    AUTH.checkHasLogined().then(isLogined => {
+      this.setData({
+        wxlogin: isLogined
+      })
+      if (isLogined) {
+        this.gitCouponDone(e);
       }
     })
   },
-  gitCoupon: function (e) {
+  gitCouponDone: function (e) {    
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/discounts/fetch',
@@ -250,18 +216,8 @@ Page({
             })
           }, 1500)
         } else if (res.data.code == 600){
-          wx.showModal({
-            title: '权限不足',
-            content: '您当前尚未登陆，是否前往登陆？',
-            success: function (res) {
-              if (res.confirm) {
-                wx.navigateTo({
-                  url: '/pages/authorize/index',
-                })
-              } else if (res.cancel) {
-                console.log('用户点击取消授权登陆')
-              }
-            }
+          this.setData({
+            wxlogin: false
           })
         } else {
           wx.showModal({
@@ -316,5 +272,20 @@ Page({
   wxSearchTap: function (e) {
     var that = this
     WxSearch.wxSearchHiddenPancel(that);
+  },
+  cancelLogin() {
+    this.setData({
+      wxlogin: true
+    })
+  },
+  processLogin(e) {
+    if (!e.detail.userInfo) {
+      wx.showToast({
+        title: '已取消',
+        icon: 'none',
+      })
+      return;
+    }
+    AUTH.register(this);
   }
 })

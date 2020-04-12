@@ -92,14 +92,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: wx.getStorageSync('mallName') + '——' + app.globalData.shareProfile,
-      path: '/pages/finder/index',
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      title: wx.getStorageSync('shareProfile'),
+      path: '/pages/classification/index?inviter_id=' + wx.getStorageSync('uid')
     }
   },
   onReachBottom: function(){
@@ -118,13 +112,6 @@ Page({
     wx.navigateTo({
       url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
     })
-  },
-  tapBanner: function (e) {
-    if (e.currentTarget.dataset.id != 0) {
-      wx.navigateTo({
-        url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
-      })
-    }
   },
   getRecommendTitlePicStr: function () {
     var that = this;
@@ -168,7 +155,7 @@ Page({
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/notice/list',
-      data: { pageSize: 7 },
+      data: { pageSize: 7, type: 2 },
       success: function (res) {
         if (res.data.code == 0) {
           that.setData({
@@ -182,9 +169,6 @@ Page({
     var that = this
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/banner/list',
-      data: {
-        key: 'mallName'
-      },
       success: function (res) {
         console.log("请求banners返回代码", res.data.code)
         if (res.data.code === 0) {
@@ -319,5 +303,13 @@ Page({
   showPopup(PopupClassname) {
     let popupComponent = this.selectComponent(PopupClassname);
     popupComponent && popupComponent.show();
+  },
+  tapBanner: function (e) {
+    const url = e.currentTarget.dataset.url
+    if (url) {
+      wx.navigateTo({
+        url
+      })
+    }
   }
 })

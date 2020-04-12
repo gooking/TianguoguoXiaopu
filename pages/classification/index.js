@@ -1,3 +1,5 @@
+const WXAPI = require('apifm-wxapi')
+var WxParse = require('../../templates/wxParse/wxParse.js');
 var app = getApp();
 var starscore = require("../../templates/starscore/starscore.js");
 //var server = require('../../utils/server');
@@ -7,8 +9,8 @@ Page(Object.assign({},{
     indicatorDots: true,
     loadingStatus: false, // loading
     loadingFinish: false,
-    shopLogo: 'https://cdn.it120.cc/apifactory/2018/06/10/527a0d6e3b3f1ffc32748193d743da26.jpg',
-    shopPrompt: [],
+    shopPrompt: undefined,
+    shopPromptRate: undefined,
     shopDelivery: [],
     swiperCurrent: 0,
     selectCurrent: 0,
@@ -34,14 +36,17 @@ Page(Object.assign({},{
     wx.hideNavigationBarLoading() //完成停止加载
     wx.stopPullDownRefresh() //停止下拉刷新
   },
-  onLoad: function (options) {
+  async onLoad(options) {
     var that = this
-    
-    wx.setNavigationBarTitle({
-      title: wx.getStorageSync('mallName')
+    app.getMallName().then(res => {
+      wx.setNavigationBarTitle({
+        title: res
+      })
     })
+    const categories = await app.getGoodsCategory()
+    await app.getGoods(0)
     that.setData({
-      categories: app.globalData.categories,
+      categories: categories,
       goods: app.globalData.goods,
       goodsList: app.globalData.goodsList,
       onLoadStatus: app.globalData.onLoadStatus,
@@ -78,21 +83,38 @@ Page(Object.assign({},{
       that.showDialog('.onLoad-err')
     }
     
+    // 弹出公告
+    WXAPI.noticeLastOne("1").then(res => {
+      if (res.code == 0) {
+        this.setData({
+          notice: res.data
+        });
+        WxParse.wxParse('article', 'html', res.data.content, this, 5);
+      }
+    })
+    this.queryConfigBatch()
+  },
+  async queryConfigBatch(){
+    const res = await WXAPI.queryConfigBatch('logo,welcome')
+    if (res.code == 0) {
+      const _data = {}
+      res.data.forEach(config => {
+        _data[config.key] = config.value
+      })
+      this.setData(_data)
+    }
   },
   onShareAppMessage: function () {
     return {
-      title: wx.getStorageSync('mallName') + app.globalData.shareProfile,
-      path: '/pages/classification/index',
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      title: wx.getStorageSync('shareProfile'),
+      path: '/pages/classification/index?inviter_id=' + wx.getStorageSync('uid')
     }
   },
   onShow: function () {
     var that = this
+    this.mallNameBack = res => {
+      console.log('sssssassaddfgfg:',res)
+    }
   },
   //onReady生命周期函数，监听页面初次渲染完成  
   onReady: function () {
@@ -297,23 +319,16 @@ Page(Object.assign({},{
       }
     })
   },
-  getPrompt: function () {
-    var that = this
-    //  获取关于我们Title
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/config/get-value',
-      data: {
-        key: 'shopPrompt'
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            shopPrompt: res.data.data.value,
-            movable: { text: res.data.data.value}
-          })
-        }
-      }
-    })
+  async getPrompt() {
+    const res = await WXAPI.queryConfigBatch('shopPrompt,shopPromptRate')
+    if (res.code == 0) {
+      const _data = {}
+      res.data.forEach(config => {
+        _data[config.key] = config.value        
+      })
+      _data.movable = { text: _data.shopPrompt }
+      this.setData(_data)
+    }
   },
   getDelivery: function () {
     var that = this
@@ -473,6 +488,11 @@ Page(Object.assign({},{
   },
   onCancel: function () {
     this.hideDialog('.onLoad-err')
+  },
+  closeNotice(){
+    this.setData({
+      notice: null
+    })
   }
 }));
 

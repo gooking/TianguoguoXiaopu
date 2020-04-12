@@ -18,8 +18,7 @@ Page({
     var that = this;
     console.log(options)
     //初始化的时候渲染wxSearchdata 第二个为你的search高度
-    WxSearch.init(that, 43, app.globalData.hotGoods);
-    WxSearch.initMindKeys(app.globalData.goodsName);
+    WxSearch.init(that, 43, wx.getStorageSync('hotSearchWords').split(','));
     this.setData({
       keyword: options.keyword,
     })

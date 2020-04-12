@@ -1,3 +1,20 @@
+@import "/templates/login/index.wxss";
+
+.score {
+  display: flex;
+  flex-direction: column;
+  width: 750rpx;
+  height: 150rpx;
+  background-color: #00afb4;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 30px;
+  color: #fff;
+}
+.score .num {
+  font-size: 56rpx;
+}
+
 page {
   height: 100%;
 }
@@ -50,15 +67,24 @@ page {
   height: 24rpx;
 }
 
-.agree-btn {
-  margin-top: 50rpx;
-  color: #000;
+.save-btn, .cancel-btn {
+  width: 690rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  margin-top: 30rpx;
+  border-radius: 6rpx;
+  box-sizing: border-box;
 }
 
-.reject-btn {
-  margin-top: 180rpx;
-  background-color: #ff5777;
+.save-btn {
+  background-color: #e64340;
   color: #fff;
+}
+
+button[type="default"] {
+  background-color: #fff;
+  color: #000;
 }
 
 .addr-details {
@@ -90,4 +116,20 @@ picker {
 
 .hui {
   color: #777;
+}
+
+.weui-panel {
+  width: 100vw;
+}
+
+.rules {
+  width: 100vw;
+  text-align: left;
+  margin-top: 32rpx;
+  padding-left: 64rpx;
+}
+.rules view {
+  color: #333;
+  font-size: 30rpx;
+  margin-bottom: 16rpx;
 }

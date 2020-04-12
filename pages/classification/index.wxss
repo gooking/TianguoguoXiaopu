@@ -215,3 +215,33 @@ page {
   font-weight: bold;
   line-height: 40rpx;
 }
+
+.notice-mask {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  left: 0;
+  top: 0;
+}
+.notice-content {
+  position: fixed;
+  width: 550rpx;
+  left: 68rpx;
+  top: 300rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+.notice-content .t {
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 32rpx;
+}
+.notice-btn {
+  text-align: center;
+
+}

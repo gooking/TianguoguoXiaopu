@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="goods-list">
+    <view class="list-title">商品信息</view>
+    <form bindsubmit="submitReputation">
+      <block wx:for-items="{{orderDetail.goods}}" wx:key="{{index}}">
+        <view class="a-goods">
+          <view class="img-box">
+            <image src="{{item.pic}}" class="img" />
+          </view>
+          <view class="text-box">
+            <view class="arow arow01">
+              <view class="goods-name">{{item.goodsName}}</view>
+              <view class="goods-price">¥ {{item.amount}}</view>
+            </view>
+            <view class="arow">
+              <view class="goods-label">{{item.property}}</view>
+              <view class="goods-num">x {{item.number}}</view>
+            </view>
+          </view>
+        </view>        
+      </block>
+    </form>
+    <view class="btn-row" wx:if="{{orderDetail.orderInfo.status==1 || orderDetail.orderInfo.status==2}}">
+      <view class="confirm-btn" bindtap="confirmBtnTap" data-id="{{orderDetail.orderInfo.id}}">确认收货</view>
+    </view>
+
+  </view>
+  <view class="goods-info">
+    <view class="row-box">
+      <view class="row-label">商品金额</view>
+      <view class="right-text">¥ {{orderDetail.orderInfo.amount}}</view>
+    </view>
+    <view class="row-box">
+      <view class="row-label">运费</view>
+      <view class="right-text">¥ {{orderDetail.orderInfo.amountLogistics}}</view>
+    </view>
+    <view class="row-box">
+      <view class="row-label">订单总额</view>
+      <view class="right-text">¥ {{orderDetail.orderInfo.amountReal}}</view>
+    </view>
+  </view>
+</view>

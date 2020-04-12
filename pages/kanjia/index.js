@@ -47,13 +47,7 @@ Page({
     var that = this;
     return {
       title: "帮我来砍价",
-      path: "/pages/kanjia/index?kjId=" + that.data.kjId + "&joiner=" + that.data.joiner + "&id=" + that.data.id,
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      path: "/pages/kanjia/index?kjId=" + that.data.kjId + "&joiner=" + that.data.joiner + "&id=" + that.data.id + '&inviter_id=' + wx.getStorageSync('uid')
     }
   },
   getVideoSrc: function (videoId) {

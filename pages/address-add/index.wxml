@@ -52,3 +52,6 @@
     <button type="default" class="cancel-btn" bindtap="bindCancel">取消</button>
     </form>
 </view>
+
+<import src="/templates/login/index.wxml" />
+<template is="apifmLogin" data="{{wxlogin: wxlogin}}" />

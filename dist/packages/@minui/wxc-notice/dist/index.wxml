@@ -1,7 +1,7 @@
 <view wx:if="{{isShow && notice}}" class="notice" style="background-color: {{bgColor}};">
     <wxc-icon wx:if="{{showIcon}}" class="notice__icon" type="notice" size="38" color="{{iconColor}}" _pid="{{_pid}}"></wxc-icon>
     <view class="notice__text--wrap" style="color: {{color}};">
-        <view wx:if="{{scroll}}" class="notice__text notice__text--animate">
+        <view wx:if="{{scroll}}" class="notice__text notice__text--animate" style="animation: notice {{rate}}s linear infinite;">
             <text class="notice__text--span">{{notice}}</text>
             <text class="notice__text--span">{{notice}}</text>
         </view>

@@ -13,6 +13,7 @@ Page({
     hasMoreSelect: false,
     selectSize: "选择：",
     selectSizePrice: 0,
+    selectGuigePic: undefined,
     shopNum: 0,
     hideShopPopup: true,
     buyNumber: 0,
@@ -62,6 +63,7 @@ Page({
             hasMoreSelect: true,
             selectSize: that.data.selectSize + selectSizeTemp,
             selectSizePrice: res.data.data.basicInfo.minPrice,
+            selectGuigePic: res.data.data.basicInfo.pic,
           });
         }
         that.data.goodsDetail = res.data.data;
@@ -71,6 +73,7 @@ Page({
         that.setData({
           goodsDetail: res.data.data,
           selectSizePrice: res.data.data.basicInfo.minPrice,
+          selectGuigePic: res.data.data.basicInfo.pic,
           buyNumMax: res.data.data.basicInfo.stores,
           buyNumber: (res.data.data.basicInfo.stores > 0) ? 1 : 0
         });
@@ -79,7 +82,6 @@ Page({
     })
     this.reputation(e.id);
     this.getDeliveryPrice();
-    this.getKanjiaInfo(e.id);
   },
   goShopCar: function () {
     wx.reLaunch({
@@ -136,6 +138,11 @@ Page({
         buyNumber: currentNum
       })
     }
+  },
+  carNumberChange(e){
+    this.setData({
+      buyNumber: e.detail.value
+    })
   },
   numJiaTap: function () {
     if (this.data.buyNumber < this.data.buyNumMax) {
@@ -194,13 +201,26 @@ Page({
           propertyChildIds: propertyChildIds
         },
         success: function (res) {
-          that.setData({
-            selectSizePrice: res.data.data.price,
-            propertyChildIds: propertyChildIds,
-            propertyChildNames: propertyChildNames,
-            buyNumMax: res.data.data.stores,
-            buyNumber: (res.data.data.stores > 0) ? 1 : 0
-          });
+          if (res.data.code == 0) {            
+            let selectGuigePic = that.data.selectGuigePic
+            if (that.data.goodsDetail.subPics && that.data.goodsDetail.subPics.length > 0) {
+              const optionValueId = that.data.goodsDetail.properties[e.currentTarget.dataset.propertyindex].childsCurGoods[e.currentTarget.dataset.propertychildindex]
+              const _aaa = that.data.goodsDetail.subPics.find(ele => {
+                return ele.optionValueId == optionValueId.id
+              })
+              if (_aaa) {
+                selectGuigePic = _aaa.pic
+              }
+            }
+            that.setData({
+              selectSizePrice: res.data.data.price,
+              propertyChildIds: propertyChildIds,
+              propertyChildNames: propertyChildNames,
+              buyNumMax: res.data.data.stores,
+              buyNumber: (res.data.data.stores > 0) ? 1 : 0,
+              selectGuigePic
+            });
+          }          
         }
       })
     }
@@ -401,13 +421,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: this.data.goodsDetail.basicInfo.name,
-      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
-      }
+      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid')
     }
   },
   reputation: function (goodsId) {
@@ -442,27 +456,6 @@ Page({
         }
       }
     })
-  },
-  getKanjiaInfo: function (gid) {
-    var that = this;
-    if (!app.globalData.kanjiaList || app.globalData.kanjiaList.length == 0) {
-      that.setData({
-        curGoodsKanjia: null
-      });
-      return;
-    }
-    let curGoodsKanjia = app.globalData.kanjiaList.find(ele => {
-      return ele.goodsId == gid
-    });
-    if (curGoodsKanjia) {
-      that.setData({
-        curGoodsKanjia: curGoodsKanjia
-      });
-    } else {
-      that.setData({
-        curGoodsKanjia: null
-      });
-    }
   },
   goKanjia: function () {
     var that = this;

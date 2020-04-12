@@ -91,6 +91,11 @@ Page({
       data: postData,
       success: (res) => {
         if (res.data.code === 0) {
+          res.data.data.orderList.forEach(ele => {
+            if (ele.status == 1) {
+              ele.statusStr = '已接单'
+            }
+          })
           console.log('orderList',res.data.data.orderList)
           that.setData({
             totalOrderList: res.data.data.orderList,

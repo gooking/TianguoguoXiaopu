@@ -1,3 +1,5 @@
+@import "/templates/login/index.wxss";
+
 page{
     height: 100%;
 }
