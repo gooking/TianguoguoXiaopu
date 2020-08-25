@@ -1,0 +1,21 @@
+<view class="search">
+  <image class="icon" src="/images/icon/search.svg"></image>
+  <input placeholder="搜索门店" bindinput="searchChange" bindconfirm="search"/>
+</view>
+<view class="shops" wx:for="{{shops}}" wx:key="id" bindtap="goShop" data-idx="{{ index }}">
+  <view class="t">
+    <view class="name">
+      <image src="/images/icon/shop.svg"></image>
+      <text style="color:#333333">{{ item.name }}</text>
+    </view>
+  </view>
+  <view class="p">
+    <image src="/images/icon/pos-gray.svg"></image>
+    <text>{{ item.address }}</text>
+  </view>
+  <view class="distance-black">
+    <text class="d">{{ item.distance }}</text>
+    <text class="u">km</text>
+    <image src="/images/icon/next.svg"></image>
+  </view>
+</view>

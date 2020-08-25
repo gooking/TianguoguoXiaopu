@@ -71,9 +71,9 @@
       </navigator>
     </view>
     <view class="item no-border-right">
-      <navigator url="/pages/ucenter/location/location" hover-class="none" class="a">
+      <navigator url="/pages/shop/select" hover-class="none" class="a">
         <wxc-icon type='location' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
-        <text class="txt">到店里</text>
+        <text class="txt">查看门店</text>
       </navigator>
     </view>
     <view class="item">

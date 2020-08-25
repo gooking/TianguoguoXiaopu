@@ -390,3 +390,37 @@ swiper-item image {
 .buy-num-box .num-box .hui {
   background-color: #f5f5f9;
 }
+
+.shop-container {
+  width: 100vw;
+  margin: 32rpx 0rpx;
+  padding: 16rpx 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  box-sizing: border-box;
+}
+.shop-container .l {
+  display: flex;
+  align-items: center;
+}
+.shop-container .logo {
+  width: 90rpx;
+  height: 90rpx;
+}
+.shop-container .next {
+  width: 24rpx;
+  height: 36rpx;
+}
+.shop-container .info {
+  margin-left: 32rpx;
+}
+.shop-container .info .title {
+  font-size: 30rpx;
+  color: #333;
+}
+.shop-container .info .address {
+  font-size: 26rpx;
+  color: #666;
+}

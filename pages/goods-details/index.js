@@ -1,5 +1,4 @@
-//index.js
-//获取应用实例
+const WXAPI = require('apifm-wxapi')
 var app = getApp();
 var WxParse = require('../../templates/wxParse/wxParse.js');
 
@@ -69,6 +68,9 @@ Page({
         that.data.goodsDetail = res.data.data;
         if (res.data.data.basicInfo.videoId) {
           that.getVideoSrc(res.data.data.basicInfo.videoId);
+        }
+        if (res.data.data.basicInfo.shopId) {
+          that.shopSubdetail(res.data.data.basicInfo.shopId)
         }
         that.setData({
           goodsDetail: res.data.data,
@@ -502,5 +504,20 @@ Page({
         }
       }
     })
-  }
+  },
+  async shopSubdetail(shopId){
+    const res = await WXAPI.shopSubdetail(shopId)
+    if (res.code == 0) {
+      this.setData({
+        shopSubdetail: res.data
+      })
+    }
+  },
+  openTgLocation: function() {
+    wx.openLocation({
+      latitude: this.data.shopSubdetail.info.latitude,
+      longitude: this.data.shopSubdetail.info.longitude,
+      scale: 18, // 缩放比例
+    })
+  },
 })

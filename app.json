@@ -21,7 +21,8 @@
     "pages/withdraw/index",
     "pages/kanjia/index",
     "pages/ucenter/feedback/feedback",
-    "pages/ucenter/location/location"
+    "pages/ucenter/location/location",
+    "pages/shop/select"
   ],
   "window": {
     "backgroundTextStyle": "light",

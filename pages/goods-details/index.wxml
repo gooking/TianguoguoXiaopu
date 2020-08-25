@@ -37,6 +37,18 @@
   <view wx:if="{{hasMoreSelect}}" class="row-arrow" bindtap="bindGuiGeTap">
     {{selectSize}}
   </view>
+  <view wx:if="{{shopSubdetail}}" class="shop-container" bindtap="openTgLocation">
+    <view class="l">
+      <image class="logo" mode="aspectFill" src="{{shopSubdetail.info.pic}}"></image>
+      <view class="info">
+        <view class="title">{{shopSubdetail.info.name}}</view>
+        <view class="address">{{shopSubdetail.info.address}}</view>
+      </view>
+    </view>
+    <view class="r">
+      <image class="next" src="/images/more/enter.png"></image>
+    </view>
+  </view>
   <view class="goods-des-info">
     <view class="label-title">商品介绍</view>
     <view class="goods-text">

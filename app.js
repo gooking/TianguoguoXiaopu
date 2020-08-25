@@ -129,8 +129,8 @@ App({
     bgGreen: 175,
     bgBlue: 180,
     userInfo: null,
-    subDomain: "ckfruit",// 商城后台个性域名tgg
-    version: "2.0.6",
+    subDomain: "tggnew",// 商城后台个性域名 tggnew
+    version: "2.1.0",
     shareProfile: '   一流的服务，做超新鲜的水果' // 首页转发的时候术语
   }
   // 根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒
