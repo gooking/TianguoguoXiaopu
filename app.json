@@ -22,7 +22,11 @@
     "pages/kanjia/index",
     "pages/ucenter/feedback/feedback",
     "pages/ucenter/location/location",
-    "pages/shop/select"
+    "pages/shop/select",
+    "pages/fx/apply",
+    "pages/fx/apply-status",
+    "pages/fx/members",
+    "pages/fx/commisionLog"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,7 +40,6 @@
     "selectedColor": "#00afb4",
     "borderStyle": "black",
     "backgroundColor": "#fff",
-    "box-shadow": "0 0 4px 0",
     "list": [
       {
         "pagePath": "pages/choiceness/index",
@@ -80,6 +83,17 @@
     "scope.userLocation": {
       "desc": "获取离你最近的门店"
     }
+  },
+  "usingComponents": {
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-search": "@vant/weapp/search/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-count-down": "@vant/weapp/count-down/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
+    "van-tag": "@vant/weapp/tag/index"
   },
   "sitemapLocation": "sitemap.json"
 }

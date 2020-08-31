@@ -42,9 +42,6 @@ Page({
       bgBlue: app.globalData.bgBlue
     })
     that.getRecommendTitlePicStr();
-    wx.setNavigationBarTitle({
-      title: '果果精选',
-    })
     that.getBanners();
     that.getNotice();
     that.getAppRecommendGoodsList()
@@ -155,7 +152,7 @@ Page({
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/' + app.globalData.subDomain + '/notice/list',
-      data: { pageSize: 7, type: 2 },
+      data: { pageSize: 7 },
       success: function (res) {
         if (res.data.code == 0) {
           that.setData({

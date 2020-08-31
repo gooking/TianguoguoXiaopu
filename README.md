@@ -32,7 +32,7 @@
 
 # 扫码体验
 
-<img src="https://www.it120.cc/images/tgg.jpg" width="200px">
+<img src="https://dcdn.it120.cc/2020/03/22/d4a4abd1-ea23-42e0-a5f1-210e737ed841.jpg" width="200px">
 
 # 更新日志
 
@@ -40,12 +40,8 @@
 
 [https://github.com/gooking/TianguoguoXiaopu/commits/master](https://github.com/gooking/TianguoguoXiaopu/commits/master)
 
-# 数据克隆商户号
-
-一键克隆“甜果果小铺”测试数据，请填写商户号 891
-
 # 使用说明
 
-请前往“甜果果小铺”查看原始教程：
+请按照教程操作即可：
 
-[前往查看](https://github.com/walcer/TianguoguoXiaopu)
+[https://www.it120.cc/help/pumbmy.html](https://www.it120.cc/help/pumbmy.html)

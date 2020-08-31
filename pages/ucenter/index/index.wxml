@@ -83,12 +83,18 @@
       </navigator>
     </view>
     <view class="item">
+      <navigator url="/pages/fx/apply-status" hover-class="none" class="a">
+        <wxc-icon type='group' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
+        <text class="txt">分销中心</text>
+      </navigator>
+    </view>
+    <view class="item">
       <navigator url="/pages/recharge/exchange" hover-class="none" class="a">
         <wxc-icon type='rate' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">积分兑换</text>
       </navigator>
     </view>
-    <view class="item no-border-right" bindtap='scanOrder'>
+    <view class="item" bindtap='scanOrder'>
       <view class="a">
         <wxc-icon type='scan' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">扫码收货</text>
@@ -106,7 +112,7 @@
         <text class="txt">关于我们</text>
       </navigator>
     </view>
-    <view class="item no-border-bottom">
+    <view class="item item-bottom">
       <navigator url="/pages/ucenter/feedback/feedback" hover-class="none" class="a">
         <wxc-icon type='comment' size='{{iconSize}}' color='{{iconColor}}' style='margin:15rpx 0 10rpx 0;'></wxc-icon>
         <text class="txt">意见反馈</text>

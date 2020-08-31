@@ -18,7 +18,7 @@
       <wxc-label wx:if="{{item.numberOrders == 0}}" class="goodsSoldNumber" type="fill">新品上市</wxc-label>
       <wxc-label wx:else  class="goodsSoldNumber">已售{{item.numberOrders}}份</wxc-label>
       <wxc-label class="goodsScore" type='fill' type-color='none' text-color='#666666'>评分：
-        <block wx:for="{{item.starpic}}" wx:key="{{item.id}}" wx:for-item="star">
+        <block wx:for="{{item.starpic}}" wx:key="id" wx:for-item="star">
           <image class="img" src="{{star}}" style="width:20rpx;height:20rpx;"></image>
         </block>
         <text style='padding-left:10rpx;' wx:if="{{item.starscore}}" data-pingfen="{{item.starscore}}">{{item.starscore}}分</text>

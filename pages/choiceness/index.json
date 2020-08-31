@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "精选",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "wxc-icon": "../../dist/packages/@minui/wxc-icon/dist/index",
