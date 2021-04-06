@@ -1250,6 +1250,12 @@ module.exports = (_module$exports = {
   register_tt: function register_tt(data) {
     return request('/user/tt/microapp/register', true, 'post', data);
   },
+  authorize: (data) => {
+    return request('/user/wxapp/authorize', true, 'post', data)
+  },
+  bindSeller: data => {
+    return request('/user/bindSeller', true, 'post', data)
+  },
   login_tt: function login_tt(code) {
     return request('/user/tt/microapp/login', true, 'post', {
       code: code

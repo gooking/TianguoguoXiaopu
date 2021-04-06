@@ -53,6 +53,9 @@ Page({
     })
   },
   onLoad: function () {
+    AUTH.authorize().then(res => {
+      AUTH.bindSeller()
+    })
     //初始化的时候渲染wxSearchdata 第二个为你的search高度
     WxSearch.init(this, 43, wx.getStorageSync('hotSearchWords').split(','));
 
@@ -277,15 +280,5 @@ Page({
     this.setData({
       wxlogin: true
     })
-  },
-  processLogin(e) {
-    if (!e.detail.userInfo) {
-      wx.showToast({
-        title: '已取消',
-        icon: 'none',
-      })
-      return;
-    }
-    AUTH.register(this);
   }
 })

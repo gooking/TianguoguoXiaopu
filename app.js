@@ -130,7 +130,7 @@ App({
     bgBlue: 180,
     userInfo: null,
     subDomain: "cjns",// 商城后台个性域名 tggnew
-    version: "2.3.0"
+    version: "2.4.0"
   }
   // 根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒
 })

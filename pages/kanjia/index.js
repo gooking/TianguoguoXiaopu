@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp();
 var WxParse = require('../../templates/wxParse/wxParse.js');
+const AUTH = require('../../utils/auth')
 
 Page({
   data: {
@@ -23,6 +24,9 @@ Page({
     this.data.id = e.id;
     this.data.kjId = e.kjId;
     this.data.joiner = e.joiner;
+    AUTH.authorize().then(res => {
+      AUTH.bindSeller()
+    })
     var that = this;
     wx.request({
       url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/detail',

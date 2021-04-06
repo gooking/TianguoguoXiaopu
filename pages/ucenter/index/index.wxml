@@ -1,6 +1,6 @@
 <view class="container">
   <view class='userbox' style='background: -webkit-linear-gradient(top, rgba({{bgRed}},{{bgGreen}},{{bgBlue}}, 1), rgba({{bgRed}},{{bgGreen}},{{bgBlue}}, 0.3))'>
-    <view wx:if="{{apiUserInfoMap}}" class="userinfo">
+    <view wx:if="{{apiUserInfoMap && apiUserInfoMap.base.nick && apiUserInfoMap.base.avatarUrl}}" class="userinfo">
       <wxc-avatar class="userinfo-avatar" src="{{ apiUserInfoMap.base.avatarUrl }}"> </wxc-avatar>
       <view style='width:30rpx;'></view>
       <view class='userinfo-text'>
@@ -17,7 +17,7 @@
 
     </view>
     <view wx:else class="userinfo">
-      <wxc-avatar class="userinfo-avatar-no" mold="square" src="{{ logo }}" bindtap="relogin"> </wxc-avatar>
+      <wxc-avatar class="userinfo-avatar-no" mold="square" src="{{ logo }}" bindtap="updateUserInfo"> </wxc-avatar>
       <view class='userinfo-text'>
         <text class="userinfo-nickname"> 欢迎您 ，👆 点我登陆 </text>
         <view style='height:10rpx;'></view>

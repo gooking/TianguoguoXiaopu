@@ -1,5 +1,4 @@
-//index.js
-//获取应用实例
+const AUTH = require('../../utils/auth')
 var starscore = require("../../templates/starscore/starscore.js");
 var app = getApp();
 Page({
@@ -30,6 +29,9 @@ Page({
     height: []
   },
   onLoad: function () {
+    AUTH.authorize().then(res => {
+      AUTH.bindSeller()
+    })
     var that = this
     that.setData({
       goodsList: app.globalData.goodsList,
@@ -70,7 +72,6 @@ Page({
     } catch (e) {
 
     }
-    console.log('stv', that.data.stv, that.data.height)
   },
   onShow: function () {
     var that = this

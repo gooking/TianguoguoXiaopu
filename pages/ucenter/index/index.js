@@ -1,5 +1,6 @@
 const app = getApp()
 const AUTH = require('../../../utils/auth')
+const WXAPI = require('apifm-wxapi')
 
 Page({
   data: {
@@ -230,11 +231,6 @@ Page({
       }
     })
   },
-  relogin: function () {
-    this.setData({
-      wxlogin: false
-    })
-  },
   recharge: function () {
     wx.navigateTo({
       url: "/pages/recharge/index"
@@ -249,16 +245,6 @@ Page({
     this.setData({
       wxlogin: true
     })
-  },
-  processLogin(e) {
-    if (!e.detail.userInfo) {
-      wx.showToast({
-        title: '已取消',
-        icon: 'none',
-      })
-      return;
-    }
-    AUTH.register(this);
   },
   scanOrder(){
     wx.scanCode({
@@ -276,5 +262,44 @@ Page({
         })
       }
     })
-  }
+  },
+  updateUserInfo(e) {
+    wx.getUserProfile({
+      lang: 'zh_CN',
+      desc: '用于完善会员资料',
+      success: res => {
+        console.log(res);
+        this._updateUserInfo(res.userInfo)
+      },
+      fail: err => {
+        console.log(err);
+        wx.showToast({
+          title: err.errMsg,
+          icon: 'none'
+        })
+      }
+    })
+  },
+  async _updateUserInfo(userInfo) {
+    const postData = {
+      token: wx.getStorageSync('token'),
+      nick: userInfo.nickName,
+      avatarUrl: userInfo.avatarUrl,
+      city: userInfo.city,
+      province: userInfo.province,
+      gender: userInfo.gender,
+    }
+    const res = await WXAPI.modifyUserInfo(postData)
+    if (res.code != 0) {
+      wx.showToast({
+        title: res.msg,
+        icon: 'none'
+      })
+      return
+    }
+    wx.showToast({
+      title: '登陆成功',
+    })
+    this.getUserApiInfo()
+  },
 })

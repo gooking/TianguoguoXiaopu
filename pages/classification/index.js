@@ -1,4 +1,5 @@
 const WXAPI = require('apifm-wxapi')
+const AUTH = require('../../utils/auth')
 var WxParse = require('../../templates/wxParse/wxParse.js');
 var app = getApp();
 var starscore = require("../../templates/starscore/starscore.js");
@@ -37,6 +38,9 @@ Page(Object.assign({},{
     wx.stopPullDownRefresh() //停止下拉刷新
   },
   async onLoad(options) {
+    AUTH.authorize().then(res => {
+      AUTH.bindSeller()
+    })
     var that = this
     app.getMallName().then(res => {
       wx.setNavigationBarTitle({

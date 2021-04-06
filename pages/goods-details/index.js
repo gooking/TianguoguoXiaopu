@@ -1,6 +1,7 @@
 const WXAPI = require('apifm-wxapi')
 var app = getApp();
 var WxParse = require('../../templates/wxParse/wxParse.js');
+const AUTH = require('../../utils/auth')
 
 Page({
   data: {
@@ -35,6 +36,9 @@ Page({
     })
   },
   onLoad: function (e) {
+    AUTH.authorize().then(res => {
+      AUTH.bindSeller()
+    })
     var that = this;
     that.data.kjId = e.kjId;
     // 获取购物车数据
