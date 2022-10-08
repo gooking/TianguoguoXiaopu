@@ -34,11 +34,13 @@
 
 <img src="https://dcdn.it120.cc/2020/08/30/fd095c58-e655-4785-af0a-89e0b4da7cfe.jpg" width="200px">
 
-# 更新日志
-
-点击查看：
-
-[https://github.com/gooking/TianguoguoXiaopu/commits/master](https://github.com/gooking/TianguoguoXiaopu/commits/master)
+# 其他优秀开源模板推荐
+- [天使童装](https://github.com/EastWorld/wechat-app-mall) [码云镜像](https://gitee.com/javazj/wechat-app-mall)
+- [天使童装（uni-app版本）](https://github.com/gooking/uni-app-mall) [码云镜像](https://gitee.com/javazj/uni-app-mall)
+- [舔果果小铺（升级版）](https://github.com/gooking/TianguoguoXiaopu)
+- [面馆风格小程序](https://gitee.com/javazj/noodle_shop_procedures)
+- [AI名片](https://github.com/gooking/visitingCard)
+- [仿海底捞订座排队 (uni-app)](https://github.com/gooking/dingzuopaidui) [码云镜像](https://gitee.com/javazj/dingzuopaidui)
 
 # 使用说明
 
