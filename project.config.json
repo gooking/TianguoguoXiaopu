@@ -37,70 +37,47 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.10.1",
-  "appid": "wxa4d18ff97fa58db3",
+  "appid": "wx54714e318e3b405c",
   "projectname": "%E7%94%9C%E6%9E%9C%E6%9E%9C%E5%B0%8F%E9%93%BA%E6%A8%A1%E7%89%88",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {
-    "search": {
-      "list": [
-        {
-          "name": "test",
-          "pathName": "",
-          "title": "",
-          "cacheKey": ""
-        }
-      ]
-    },
-    "conversation": {
-      "list": [
-        {
-          "name": "test",
-          "query": "",
-          "boxQI": "",
-          "service": {}
-        }
-      ]
-    },
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
     "miniprogram": {
       "list": [
         {
-          "id": -1,
           "name": "精选",
           "pathName": "pages/choiceness/index",
           "query": ""
         },
         {
-          "id": -1,
           "name": "发现",
           "pathName": "pages/finder/index",
           "query": ""
         },
         {
-          "id": -1,
           "name": "分类",
           "pathName": "pages/classification/index",
           "query": ""
         },
         {
-          "id": -1,
           "name": "我的",
           "pathName": "pages/ucenter/index/index",
           "query": ""
         },
         {
-          "id": -1,
           "name": "购物车",
           "pathName": "pages/shop-cart/index",
           "query": ""
         }
       ]
     }
+  },
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }
